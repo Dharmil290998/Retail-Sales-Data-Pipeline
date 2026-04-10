@@ -53,7 +53,7 @@
 									"referenceName": "RestResource1",
 									"type": "DatasetReference",
 									"parameters": {
-										"file_name": {
+										"file": {
 											"value": "@item().file",
 											"type": "Expression"
 										}
