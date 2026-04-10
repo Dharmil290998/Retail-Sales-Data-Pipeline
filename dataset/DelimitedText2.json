@@ -8,6 +8,9 @@
 		"parameters": {
 			"file": {
 				"type": "string"
+			},
+			"folder": {
+				"type": "string"
 			}
 		},
 		"annotations": [],
@@ -19,7 +22,10 @@
 					"value": "@dataset().file",
 					"type": "Expression"
 				},
-				"folderPath": "bronze data",
+				"folderPath": {
+					"value": "@concat('bronze data','/',dataset().folder)",
+					"type": "Expression"
+				},
 				"fileSystem": "sales"
 			},
 			"columnDelimiter": ",",
