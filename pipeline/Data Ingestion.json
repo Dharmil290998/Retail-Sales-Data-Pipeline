@@ -1,5 +1,5 @@
 {
-	"name": "pipeline1",
+	"name": "Data Ingestion",
 	"properties": {
 		"activities": [
 			{
@@ -12,7 +12,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "pipeline2",
+						"referenceName": "On-Premises",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -28,7 +28,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "pipeline3",
+						"referenceName": "Rest API",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
