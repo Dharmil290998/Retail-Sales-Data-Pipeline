@@ -1,0 +1,119 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adfprojectpipeline"
+		},
+		"ADLS_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS'"
+		},
+		"SQL Database for Copy_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQL Database for Copy'"
+		},
+		"SQL Database_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SQL Database'"
+		},
+		"ADLS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://salesstorageproject.dfs.core.windows.net/"
+		},
+		"Github_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://raw.githubusercontent.com/"
+		},
+		"SQL Database for Copy_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dnpserver123.database.windows.net"
+		},
+		"SQL Database for Copy_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dnpdatabase"
+		},
+		"SQL Database for Copy_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "dnpserver"
+		},
+		"SQL Database_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "dnpserver123.database.windows.net"
+		},
+		"SQL Database_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "dnpdatabase"
+		},
+		"SQL Database_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "dnpserver"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adfprojectpipeline_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2024-03-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ADLS_accountKey": {
+						"value": "[parameters('ADLS_accountKey')]"
+					},
+					"SQL Database for Copy_password": {
+						"value": "[parameters('SQL Database for Copy_password')]"
+					},
+					"SQL Database_password": {
+						"value": "[parameters('SQL Database_password')]"
+					},
+					"ADLS_properties_typeProperties_url": {
+						"value": "[parameters('ADLS_properties_typeProperties_url')]"
+					},
+					"Github_properties_typeProperties_url": {
+						"value": "[parameters('Github_properties_typeProperties_url')]"
+					},
+					"SQL Database for Copy_properties_typeProperties_server": {
+						"value": "[parameters('SQL Database for Copy_properties_typeProperties_server')]"
+					},
+					"SQL Database for Copy_properties_typeProperties_database": {
+						"value": "[parameters('SQL Database for Copy_properties_typeProperties_database')]"
+					},
+					"SQL Database for Copy_properties_typeProperties_userName": {
+						"value": "[parameters('SQL Database for Copy_properties_typeProperties_userName')]"
+					},
+					"SQL Database_properties_typeProperties_server": {
+						"value": "[parameters('SQL Database_properties_typeProperties_server')]"
+					},
+					"SQL Database_properties_typeProperties_database": {
+						"value": "[parameters('SQL Database_properties_typeProperties_database')]"
+					},
+					"SQL Database_properties_typeProperties_userName": {
+						"value": "[parameters('SQL Database_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

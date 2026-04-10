@@ -1,0 +1,48 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adfprojectpipeline"
+		},
+		"ADLS_accountKey": {
+			"value": ""
+		},
+		"SQL Database for Copy_password": {
+			"value": ""
+		},
+		"SQL Database_password": {
+			"value": ""
+		},
+		"ADLS_properties_typeProperties_url": {
+			"value": "https://salesstorageproject.dfs.core.windows.net/"
+		},
+		"Github_properties_typeProperties_url": {
+			"value": "https://raw.githubusercontent.com/"
+		},
+		"SQL Database for Copy_properties_typeProperties_server": {
+			"value": "dnpserver123.database.windows.net"
+		},
+		"SQL Database for Copy_properties_typeProperties_database": {
+			"value": "dnpdatabase"
+		},
+		"SQL Database for Copy_properties_typeProperties_userName": {
+			"value": "dnpserver"
+		},
+		"SQL Database_properties_typeProperties_server": {
+			"value": "dnpserver123.database.windows.net"
+		},
+		"SQL Database_properties_typeProperties_database": {
+			"value": "dnpdatabase"
+		},
+		"SQL Database_properties_typeProperties_userName": {
+			"value": "dnpserver"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
