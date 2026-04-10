@@ -11,14 +11,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS'"
 		},
-		"SQL Database for Copy_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SQL Database for Copy'"
-		},
-		"SQL Database_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'SQL Database'"
-		},
 		"ADLS_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://salesstorageproject.dfs.core.windows.net/"
@@ -50,6 +42,10 @@
 		"SQL Database_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "dnpserver"
+		},
+		"keyvault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://salesproject.vault.azure.net/"
 		}
 	},
 	"variables": {
@@ -72,7 +68,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "pipeline1",
+								"referenceName": "Data Ingestion",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -86,11 +82,11 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
+				"[concat(variables('factoryId'), '/pipelines/Data Ingestion')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"name": "[concat(parameters('factoryName'), '/Data Ingestion')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -105,7 +101,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "pipeline2",
+								"referenceName": "On-Premises",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -122,7 +118,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "pipeline3",
+								"referenceName": "Rest API",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -136,12 +132,12 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipeline2')]",
-				"[concat(variables('factoryId'), '/pipelines/pipeline3')]"
+				"[concat(variables('factoryId'), '/pipelines/On-Premises')]",
+				"[concat(variables('factoryId'), '/pipelines/Rest API')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
+			"name": "[concat(parameters('factoryName'), '/On-Premises')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -363,7 +359,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline3')]",
+			"name": "[concat(parameters('factoryName'), '/Rest API')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -794,12 +790,18 @@
 					"authenticationType": "SQL",
 					"userName": "[parameters('SQL Database for Copy_properties_typeProperties_userName')]",
 					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SQL Database for Copy_password')]"
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "keyvault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "sqldatabase"
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/keyvault')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SQL Database')]",
@@ -816,9 +818,28 @@
 					"authenticationType": "SQL",
 					"userName": "[parameters('SQL Database_properties_typeProperties_userName')]",
 					"password": {
-						"type": "SecureString",
-						"value": "[parameters('SQL Database_password')]"
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "keyvault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "sqldatabase"
 					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/keyvault')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/keyvault')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('keyvault_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []

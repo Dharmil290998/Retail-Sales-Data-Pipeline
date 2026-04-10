@@ -8,12 +8,6 @@
 		"ADLS_accountKey": {
 			"value": ""
 		},
-		"SQL Database for Copy_password": {
-			"value": ""
-		},
-		"SQL Database_password": {
-			"value": ""
-		},
 		"ADLS_properties_typeProperties_url": {
 			"value": "https://salesstorageproject.dfs.core.windows.net/"
 		},
@@ -37,6 +31,9 @@
 		},
 		"SQL Database_properties_typeProperties_userName": {
 			"value": "dnpserver"
+		},
+		"keyvault_properties_typeProperties_baseUrl": {
+			"value": "https://salesproject.vault.azure.net/"
 		}
 	}
 }
