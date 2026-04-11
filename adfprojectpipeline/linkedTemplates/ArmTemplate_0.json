@@ -23,6 +23,10 @@
 			"type": "string",
 			"defaultValue": "https://salesproject.vault.azure.net/"
 		},
+		"AzureDatabricks_new_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0410-184717-ibktux7e"
+		},
 		"SQL Database for Copy_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "dnpserver123.database.windows.net"
@@ -237,6 +241,30 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricks_new')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDatabricks",
+				"typeProperties": {
+					"domain": "https://adb-7405611183709282.2.azuredatabricks.net",
+					"accessToken": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "keyvault",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "databrick-notebook"
+					},
+					"existingClusterId": "[parameters('AzureDatabricks_new_properties_typeProperties_existingClusterId')]"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/keyvault')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SQL Database for Copy')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -395,6 +423,182 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/RestResource1')]",
 				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Customer",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/customer"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_new",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Inventory",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/inventory"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_new",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "OrderDetails",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/orderdetails"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_new",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Orders",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/orders"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_new",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Payment",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/payment"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_new",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Product",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/products"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_new",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Shipping",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/shipping"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_new",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Store",
+						"type": "DatabricksNotebook",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/stores"
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks_new",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks_new')]"
 			]
 		},
 		{
@@ -833,6 +1037,23 @@
 							"waitOnCompletion": true,
 							"parameters": {}
 						}
+					},
+					{
+						"name": "Silver Layer",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"policy": {
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline1",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
 					}
 				],
 				"policy": {
@@ -841,7 +1062,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Data Ingestion')]"
+				"[concat(variables('factoryId'), '/pipelines/Data Ingestion')]",
+				"[concat(variables('factoryId'), '/pipelines/pipeline1')]"
 			]
 		}
 	]

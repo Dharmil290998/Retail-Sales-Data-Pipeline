@@ -11,6 +11,9 @@
 		"ADLS_properties_typeProperties_url": {
 			"value": "https://salesstorageproject.dfs.core.windows.net/"
 		},
+		"AzureDatabricks_new_properties_typeProperties_existingClusterId": {
+			"value": "0410-184717-ibktux7e"
+		},
 		"Github_properties_typeProperties_url": {
 			"value": "https://raw.githubusercontent.com/"
 		},

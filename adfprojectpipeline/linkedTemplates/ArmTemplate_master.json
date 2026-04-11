@@ -15,6 +15,10 @@
 			"type": "string",
 			"defaultValue": "https://salesstorageproject.dfs.core.windows.net/"
 		},
+		"AzureDatabricks_new_properties_typeProperties_existingClusterId": {
+			"type": "string",
+			"defaultValue": "0410-184717-ibktux7e"
+		},
 		"Github_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://raw.githubusercontent.com/"
@@ -85,6 +89,9 @@
 					},
 					"keyvault_properties_typeProperties_baseUrl": {
 						"value": "[parameters('keyvault_properties_typeProperties_baseUrl')]"
+					},
+					"AzureDatabricks_new_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('AzureDatabricks_new_properties_typeProperties_existingClusterId')]"
 					},
 					"SQL Database for Copy_properties_typeProperties_server": {
 						"value": "[parameters('SQL Database for Copy_properties_typeProperties_server')]"
