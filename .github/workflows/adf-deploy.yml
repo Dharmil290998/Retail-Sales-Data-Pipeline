@@ -39,8 +39,8 @@ jobs:
         uses: azure/arm-deploy@v2
         with:
           resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          template: ./adf_publish/ARMTemplateForFactory.json
+          template: ./adf_publish/adfprojectpipeline/ARMTemplateForFactory.json
           parameters: >
-            ./adf_publish/ARMTemplateParametersForFactory.json
+            ./adf_publish/adfprojectpipeline/ARMTemplateParametersForFactory.json
             factoryName=${{ secrets.ADF_FACTORY_NAME }}
           deploymentName: adf-deployment
