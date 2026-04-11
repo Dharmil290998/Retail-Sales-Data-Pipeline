@@ -1,0 +1,168 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Customer",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/customer"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_new",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Inventory",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/inventory"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_new",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "OrderDetails",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/orderdetails"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_new",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Orders",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/orders"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_new",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Payment",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/payment"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_new",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Product",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/products"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_new",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Shipping",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/shipping"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_new",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
+				"name": "Store",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/dnp50022@gmail.com/Retail-Sales-Data-Pipeline/databricks/notebooks/silver/stores"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks_new",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
