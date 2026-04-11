@@ -1,5 +1,5 @@
 {
-	"name": "End to End Pipeline Workflow",
+	"name": "End to End Pipeline",
 	"properties": {
 		"activities": [
 			{
