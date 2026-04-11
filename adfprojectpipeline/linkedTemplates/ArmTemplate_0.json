@@ -1112,7 +1112,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Bronze')]",
+			"name": "[concat(parameters('factoryName'), '/End to End Pipeline')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1137,7 +1137,14 @@
 					{
 						"name": "Silver Layer",
 						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Bronze Layer",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"secureInput": false
 						},
@@ -1154,7 +1161,14 @@
 					{
 						"name": "Gold Layer",
 						"type": "ExecutePipeline",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Silver Layer",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"secureInput": false
 						},
