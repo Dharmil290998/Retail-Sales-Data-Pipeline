@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - adf_publish
+
 permissions:
   id-token: write
   contents: read
