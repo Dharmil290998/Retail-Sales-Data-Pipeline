@@ -1,1 +1,111 @@
+name: Deploy ADF
 
+on:
+  push:
+    branches:
+      - adf_publish
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+
+  # DEV DEPLOYMENT
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Checkout adf_publish
+        uses: actions/checkout@v4
+        with:
+          ref: adf_publish
+          path: adf_publish
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to DEV
+        uses: azure/arm-deploy@v2
+        with:
+          resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          template: ./adf_publish/adfprojectpipeline/ARMTemplateForFactory.json
+          parameters: >
+            ./adf_publish/adfprojectpipeline/ARMTemplateParametersForFactory.json
+            factoryName=${{ secrets.ADF_FACTORY_NAME }}
+          deploymentName: adf-dev-deployment
+
+  # QA DEPLOYMENT
+  deploy-qa:
+    runs-on: ubuntu-latest
+    needs: deploy-dev
+    environment: qa
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Checkout adf_publish
+        uses: actions/checkout@v4
+        with:
+          ref: adf_publish
+          path: adf_publish
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to QA
+        uses: azure/arm-deploy@v2
+        with:
+          resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          template: ./adf_publish/adfprojectpipeline/ARMTemplateForFactory.json
+          parameters: >
+            ./adf_publish/adfprojectpipeline/ARMTemplateParametersForFactory.json
+            factoryName=${{ secrets.ADF_FACTORY_NAME }}
+          deploymentName: adf-qa-deployment
+
+  # PROD DEPLOYMENT (WITH APPROVAL)
+  deploy-prod:
+    runs-on: ubuntu-latest
+    needs: deploy-qa
+    environment: prod
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Checkout adf_publish
+        uses: actions/checkout@v4
+        with:
+          ref: adf_publish
+          path: adf_publish
+
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to PROD
+        uses: azure/arm-deploy@v2
+        with:
+          resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
+          template: ./adf_publish/adfprojectpipeline/ARMTemplateForFactory.json
+          parameters: >
+            ./adf_publish/adfprojectpipeline/ARMTemplateParametersForFactory.json
+            factoryName=${{ secrets.ADF_FACTORY_NAME }}
+          deploymentName: adf-prod-deployment
