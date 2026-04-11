@@ -15,9 +15,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      # Checkout MAIN (workflow file lives here)
+      - name: Checkout main
         uses: actions/checkout@v4
 
+      # Checkout ADF PUBLISH (ARM templates live here)
+      - name: Checkout adf_publish branch
+        uses: actions/checkout@v4
+        with:
+          ref: adf_publish
+          path: adf_publish
+
+      # Azure Login
       - name: Azure Login (OIDC)
         uses: azure/login@v2
         with:
@@ -25,12 +34,13 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      # Deploy ARM Template
       - name: Deploy ARM Template
         uses: azure/arm-deploy@v2
         with:
           resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
-          template: ./adfprojectpipeline/ARMTemplateForFactory.json
+          template: ./adf_publish/ARMTemplateForFactory.json
           parameters: >
-            ./adfprojectpipeline/ARMTemplateParametersForFactory.json
+            ./adf_publish/ARMTemplateParametersForFactory.json
             factoryName=${{ secrets.ADF_FACTORY_NAME }}
           deploymentName: adf-deployment
