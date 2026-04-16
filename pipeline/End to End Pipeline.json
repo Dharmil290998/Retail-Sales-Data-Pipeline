@@ -35,7 +35,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "pipeline1",
+						"referenceName": "Silver layer Notebooks",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
@@ -58,7 +58,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "pipeline2",
+						"referenceName": "Gold layer Notebooks",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
